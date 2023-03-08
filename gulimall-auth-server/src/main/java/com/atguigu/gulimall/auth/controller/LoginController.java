@@ -117,9 +117,20 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/reg.html";
         }
 
+        R r = memberFeignService.regist(vo);
+        if(r.getCode() == 0){
+            //成功
+
+            return "redirect:http://auth.gulimall.com/login.html";
+        }else{
+            Map<String, String> errors = new HashMap<>();
+            errors.put("msg",r.getData("msg",new TypeReference<String>(){}));
+            redirectAttributes.addFlashAttribute("errors",errors);
+            return "redirect:http://auth.gulimall.com/reg.html";
+        }
 
         //1、校验验证码
-        String code = vo.getCode();
+       /* String code = vo.getCode();
 
         String s = redisTemplate.opsForValue().get(AuthServerConstant.SMS_CODE_CACHE_PREFIX + vo.getPhone());
         if(!StringUtils.isEmpty(s)){
@@ -152,7 +163,7 @@ public class LoginController {
             redirectAttributes.addFlashAttribute("errors",errors);
             //校验出错，转发到注册页
             return "redirect:http://auth.gulimall.com/reg.html";
-        }
+        }*/
     }
 
     @GetMapping("/login.html")

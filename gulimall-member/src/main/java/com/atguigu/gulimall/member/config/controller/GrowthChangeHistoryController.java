@@ -1,4 +1,4 @@
-package com.atguigu.gulimall.member.controller;
+package com.atguigu.gulimall.member.config.controller;
 
 import java.util.Arrays;
 import java.util.Map;
